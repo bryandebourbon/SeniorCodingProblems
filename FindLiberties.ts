@@ -33,16 +33,12 @@ this is the board representing the liberties for Black (stones of type -1)
 ]
  */
 
+////////// Solution //////////
 
 /**
- * Calls a function on each adjacent tile with the same value as `value`
- * @param board 2D array of numbers
- * @param x x-coordinate of current tile
- * @param y y-coordinate of current tile
- * @param value Value to compare adjacent tiles against
- * @param fn Function to call on adjacent tiles with same value as `value`
+ * Calls `fn` on each adjacent tile if it contains `value`
  */
-function forAdj2D(
+function forAdjWithVal(
     board: number[][],
     x: number,
     y: number,
@@ -58,9 +54,7 @@ function forAdj2D(
 }
 
 /**
- * Calls a function on each element of a 2D array
- * @param board 2D array of numbers
- * @param fn Function to call on each element of `board`
+ * Calls `fn` on each element of a 2D array
  */
 function forEach2D(
     board: number[][],
@@ -75,9 +69,6 @@ function forEach2D(
 
 /**
  * Calculates the number of liberties for each stone on a Go board
- * @param board 2D array representing the Go board, with 0 for empty spaces, 1 for black stones, and -1 for white stones
- * @param stone Either 1 or -1, representing which color of stone to calculate liberties for
- * @returns A 2D array of the same dimensions as `board`, where each element contains the number of liberties for that stone
  */
 function findLiberty(board: number[][], stone: 0|1|-1): number[][]
 {
@@ -94,10 +85,10 @@ function findLiberty(board: number[][], stone: 0|1|-1): number[][]
 
       while (q.length){
         const [i,j] = q.shift()!
-        forAdj2D(b,i,j, 0,(_iAdj,_jAdj)=>{
+        forAdjWithVal(b,i,j, 0,(_iAdj,_jAdj)=>{
           liberties[i][j]++;
         })
-        forAdj2D(b,i,j, stone,(iAdj,jAdj)=>{
+        forAdjWithVal(b,i,j, stone,(iAdj,jAdj)=>{
           if(!visited[iAdj][jAdj]) {
             q.push([iAdj,jAdj])
             visited[iAdj][jAdj] = true
